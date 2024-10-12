@@ -1,0 +1,6 @@
+print('Program Penampil Data Diri')
+print('**************************')
+nama = input("Masukkan Nama :")
+alamat = input("Masukkan Alamat :")
+hobby = input("Masukkan Hobby :")
+print("Hallo", nama,"!!!", "kamu tinggal di ", alamat, "dan hobby mu adalah", hobby)
