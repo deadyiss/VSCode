@@ -1,0 +1,165 @@
+- name: Deploy Laravel on pod-mirna16-managed1
+  hosts: pod-mirna16-managed1
+  become: yes
+  vars:
+    composer_url: https://getcomposer.org/download/latest-stable/composer.phar
+  tasks:
+    - name: Add PHP PPA repository
+      apt_repository:
+        repo: ppa:ondrej/php
+        state: present
+
+    - name: Install required packages (php8.0, npm, git, apache2, mysql-server)
+      apt:
+        name:
+          - php8.0
+          - php8.0-cli
+          - php8.0-curl
+          - php8.0-mbstring
+          - php8.0-xml
+          - php8.0-mysql
+          - npm
+          - git
+          - apache2
+          - php-zip
+          - unzip
+          - mysql-server
+        state: present
+        update_cache: yes
+
+    - name: Composer | Install Composer latest-stable
+      get_url:
+        url: '{{ composer_url }}'
+        dest: /usr/bin/composer.phar
+        mode: 0755
+        force: yes
+
+    - name: Composer | Symlink composer.phar
+      file:
+        src: /usr/bin/composer.phar
+        dest: /usr/bin/composer
+        state: link
+        force: yes
+
+    - name: Set Apache to start on boot
+      systemd:
+        name: apache2
+        enabled: yes
+        state: started
+
+    - name: Start and enable MySQL service
+      systemd:
+        name: mysql
+        enabled: yes
+        state: started
+
+    - name: Remove exist file
+      command: sudo rm -rf /home/student/challenge-1
+
+    - name: Ensure challenge-1 directory exists
+      file:
+        path: /home/student/challenge-1
+        state: directory
+        owner: student
+        group: student
+        mode: '0755'
+
+    - name: Enable PHP 8.0 module in Apache
+      command: a2enmod php8.0
+
+    - name: Restart Apache service
+      service:
+        name: apache2
+        state: restarted
+
+    - name: Set PHP 8.0 as default alternative
+      command: update-alternatives --set php /usr/bin/php8.0
+
+    - name: Git Clone Laravel
+      git:
+        repo: https://github.com/kunal254/laravel-8-ecommerce.git
+        dest: /home/student/challenge-1/
+        force: true
+
+    - name: Install Laravel Dependencies
+      composer:
+        command: install
+        working_dir: /home/student/challenge-1/
+      become_user: student
+
+    - name: Copy .env.example to .env
+      copy:
+        src: /home/student/challenge-1/.env.example
+        dest: /home/student/challenge-1/.env
+        remote_src: yes
+        force: yes
+
+    - name: Mengubah DB_PASSWORD di file .env
+      ansible.builtin.lineinfile:
+        path: /home/student/challenge-1/.env
+        regexp: '^DB_PASSWORD='
+        line: 'DB_PASSWORD=root'
+        backrefs: yes
+
+    - name: Change ownership of challenge-1 to www-data
+      file:
+        path: /home/student/challenge-1
+        owner: www-data
+        group: www-data
+        recurse: yes
+
+    - name: Change permissions of challenge-1 to 755
+      file:
+        path: /home/student/challenge-1
+        mode: '0755'
+        recurse: yes
+
+    - name: Remove exist file
+      command: sudo rm -rf /var/www/html/challenge-1/
+
+    - name: Move challenge-1 to /var/www/html
+      command: mv /home/student/challenge-1 /var/www/html/
+
+    - name: Set Apache virtual host for Laravel
+      copy:
+        dest: /etc/apache2/sites-available/laravel.conf
+        content: |
+          <VirtualHost *:80>
+              ServerAdmin admin@gmail.com
+              DocumentRoot /var/www/html/challenge-1/public/
+              <Directory /var/www/html/challenge-1/public/>
+                  AllowOverride All
+              </Directory>
+              ErrorLog ${APACHE_LOG_DIR}/error.log
+              CustomLog ${APACHE_LOG_DIR}/access.log combined
+          </VirtualHost>
+
+    - name: Disable default Apache site
+      command: a2dissite 000-default.conf
+
+    - name: Rewrite Apache
+      command: a2enmod rewrite
+
+    - name: Enable Laravel site
+      command: a2ensite laravel.conf
+
+    - name: Reload Apache2
+      service:
+        name: apache2
+        state: reloaded
+
+    - name: Generate Laravel application key
+      command: php artisan key:generate
+      args:
+        chdir: /var/www/html/challenge-1/
+
+    - name: Generate symbolic link for storage
+      command: php artisan storage:link
+      args:
+        chdir: /var/www/html/challenge-1/
+
+    - name: Run php artisan migrate --seed
+      command: php artisan migrate --seed
+      args:
+        chdir: /var/www/html/challenge-1/
+      ignore_errors: yes

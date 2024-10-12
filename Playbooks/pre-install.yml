@@ -1,0 +1,57 @@
+name: Install AWX Ansible
+hosts: localhost
+become: true
+tasks:
+  - name: Install Task 1
+    apt:
+      name:
+        - npm
+        - nodejs
+        - git
+        - pwgen
+        - unzip
+        - python3-virtualenv
+        - python3-pip
+      state: present
+
+  - name: Add Docker GPG apt Key
+    apt_key:
+      url: "https://download.docker.com/linux/ubuntu/gpg"
+      state: present
+
+  - name: Add Docker Repository
+    apt_repository:
+      repo: "deb https://download.docker.com/linux/ubuntu jammy stable"
+      state: present
+
+  - name: Install Task 2
+    apt:
+      name:
+        - docker-ce
+        - docker-ce-cli
+        - docker-compose-plugin
+      state: present
+
+  - name: Check Docker Service is Started
+    service:
+      name: docker
+      state: started
+      enabled: yes
+
+  - name: Add Student User to Docker Group
+    user:
+      name: student
+      groups: docker
+      append: yes
+
+  - name: Set permissions for Docker socket
+    file:
+      path: /var/run/docker.sock
+      mode: "0666"
+      owner: root
+      group: docker
+
+  - name: Install Docker-Compose Using pip3
+    ansible.builtin.pip:
+      name: docker-compose
+      executable: pip3

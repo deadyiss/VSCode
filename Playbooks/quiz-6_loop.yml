@@ -1,0 +1,19 @@
+- name: Create users on managed1 and managed2
+  hosts: all
+  become: true
+  vars_files:
+    - secret.yml
+  tasks:
+    - name: Create users on managed1
+      user:
+        name: "{{ item }}"
+        password: "{{ pass | password_hash('sha512') }}"
+      loop: "{{ list_user_ops_managed1 + list_user_dev_managed1 }}"
+      when: inventory_hostname == 'pod-deyyaa-managed1'
+
+    - name: Create users on managed2
+      user:
+        name: "{{ item }}"
+        password: "{{ pass | password_hash('sha512') }}"
+      loop: "{{ list_user_ops_managed2 + list_user_dev_managed2 }}"
+      when: inventory_hostname == 'pod-deyyaa-managed2'

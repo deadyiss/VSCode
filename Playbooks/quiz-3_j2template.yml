@@ -1,0 +1,40 @@
+- name: Konfigurasi Web Servers
+  hosts: webservers
+  become: true
+  tasks:
+    - name: Add Nginx Repository
+      template:
+        src: nginx.list.j2
+        dest: /etc/apt/sources.list.d/nginx.list
+
+    - name: Add MariaDB Repository
+      template:
+        src: mariadb.list.j2
+        dest: /etc/apt/sources.list.d/mariadb.list
+
+    - name: Add Nginx GPG key
+      ansible.builtin.apt_key:
+        url: https://nginx.org/keys/nginx_signing.key
+        state: present
+
+    - name: Import MariaDB GPG Key
+      ansible.builtin.apt_key:
+        url: https://mariadb.org/mariadb_release_signing_key.asc
+        state: present
+
+    - name: Update Repository
+      apt:
+        update_cache: yes
+
+    - name: Install Specific Version
+      apt:
+        name:
+          - nginx=1.23.1-1~jammy
+          - mariadb-server-10.9
+          - mariadb-client-10.9
+
+    - name: Check Nginx Status and Enabled
+      service: name=nginx state=started enabled=yes
+
+    - name: Check Mariadb Status and Enabled
+      service: name=mariadb state=started enabled=yes

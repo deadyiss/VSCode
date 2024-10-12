@@ -1,0 +1,42 @@
+- name: Quiz Playbook
+  hosts: pod-deyyaa-managed2
+  become: true
+  remote_user: student
+
+  tasks:
+    - name: Install paket yang diperlukan
+      apt:
+        name: 
+          - apache2
+          - mariadb-server
+          - php
+          - php-mysql
+        state: present
+
+    - name: Pastikan layanan berjalan
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      loop:
+        - apache2
+        - mariadb
+
+    - name: Salin file index.php
+      copy:
+        src: ./index.php
+        dest: /var/www/html/index.php
+
+- name: Tes web di localhost
+  hosts: localhost
+  tasks:
+    - name: Uji Web Server
+      uri:
+        url: http://pod-deyyaa-managed2/index.php
+        status_code: 200
+        return_content: yes
+      register: Result
+
+    - name: Cetak Output
+      debug:
+        var: Result.content

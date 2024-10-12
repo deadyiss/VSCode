@@ -1,0 +1,44 @@
+- name: Quiz Playbook 2
+  hosts: all
+  become: true
+  vars:
+    required_Pkg:
+      - apache2
+      - python3-urllib3
+    web_Service: apache2
+    content_File: "adinusa lab quiz variables – deyyaa"
+    dest_File: /var/www/html/index.html
+
+  tasks:
+    - name: Perbarui cache apt
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+    - name: Instal paket yang diperlukan
+      apt:
+        name: "{{required_Pkg}}"
+        state: present
+
+    - name: Cek status layanan berjalan dan aktif
+      service:
+        name: "{{web_Service}}"
+        state: started
+        enabled: true
+    - name: Salin file
+      copy:
+        content: "{{content_File}}"
+        dest: "{{dest_File}}"
+
+- name: Tes web di localhost
+  hosts: localhost
+  tasks:
+    - name: Uji Web Server
+      uri:
+        url: http://pod-deyyaa-managed2/index.html
+        status_code: 200
+        return_content: yes
+      register: Result
+
+    - name: Cetak Output
+      debug:
+        var: Result.content

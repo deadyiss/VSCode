@@ -1,0 +1,5 @@
+- name: Use quiz-roles Roles
+  hosts: managed
+  become: true
+  roles:
+    - quiz-roles
