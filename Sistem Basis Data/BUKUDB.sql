@@ -64,3 +64,17 @@ INSERT INTO PENERBIT (PENERBIT_ID, PENERBIT_NAMA) VALUES
 
 -- Melihat isi data
 SELECT * FROM KATEGORI;
+
+MariaDB [bukudb]> SELECT * FROM pengarang;
++--------------+--------------------+
+| pengarang_id | pengarang_nama     |
++--------------+--------------------+
+| ASW          | Andi Setiawan      |
+| BRH          | Budi Raharjo       |
+| BTO          | Beni Tito          |
+| DAR          | Dewi Aulia Raharjo |
+| ERD          | Erik Rusdianto     |
+| ERK          | E Rosdiana K       |
+| FDY          | Fred Hidayat       |
+| GZL          | Abdul Ghozali      |
++--------------+--------------------+
