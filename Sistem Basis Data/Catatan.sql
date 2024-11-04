@@ -123,3 +123,97 @@ Option untuk mengubah suatu field menjadi definisi_field
 Option untuk menghapus field nama_field 
 ➢ RENAME TO nama_tabel_baru \\ RENAME TABLE pelanggan TO plg; \\ ALTER TABLE plg RENAME TO pelanggan;
 Option untuk mengganti nama tabel
+
+-- DML
+-- Menampilkan data
+SELECT
+-- Mengupdate data
+UPDATE
+-- Menghapus data
+DELETE
+-- Memasukkan data
+INSERT
+
+-- Merubah data
+UPDATE BUKU SET BUKU_DESKRIPSI = 'Ini adalah buku tentang photoshop' WHERE buku_isbn = '222-34222-1-0';
+
+-- Merubah data pada 2 kolom
+UPDATE buku SET BUKU_DESKRIPSI = 'buku best Seller',
+buku_harga = 5000
+WHERE penerbit_id = 'PB02';
+
+-- Menghapus data pada tabel
+DELETE FROM BUKU WHERE buku_isbn = '222-34222-1-0';
+
+-- Menampilkan data pada kolom terpilih
+SELECT buku_judul, buku_harga FROM buku;
+
+-- Menampilkan data dengan alias
+SELECT
+a.buku_judul,
+a.buku_jmlh_hlmn,
+a.buku_harga
+FROM buku a;
+
+-- Memasukkan data ke tabel buku
+INSERT INTO buku (buku_isbn, buku_judul, penerbit_id, buku_tglterbit, buku_jmlh_hlmn, buku_harga)
+VALUES ('222-34222-1-0','Mudah Belajar Photoshop','PB01','2003-07-03',433,76000),
+('222-34222-1-1','Panduan Praktis Menggunakan Coreldraw','PB02','2004-03-15',385,85000),
+('666-96771-2-0','Panduan Membangun Jaringan TCP/IP','PB08','2006-08-02',200,115000),
+('666-96771-2-1','Implementasi TCP/IP di Linux','PB08','2008-11-21',250,89000),
+('777-76723-5-0','Cara Belajar Cepat PHP 6','PB07','2010-05-02',600,135000),
+('777-76723-5-1','Membuat Aplikasi Web dengan ASP','PB07','2004-08-01',180,145000),
+('777-76723-5-2','Belajar Sendiri Internet Marketing','PB07','2007-01-24',250,1250000),
+('777-76723-5-3','Panduan Menggunakan Yahoo dan Google','PB07','2014-11-01',400,750000),
+('888-96771-3-0','Pemrograman Pascal','PB08','2015-01-23',328,135000),
+('888-96771-3-1','Pemrograman Java','PB06','2011-03-03',550,150000),
+('888-96771-3-2','Pemrograman C untuk Hardware','PB05','2009-05-21',320,155000),
+('888-96771-3-3','Menjadi Master C++','PB06','2010-09-11',400,145000),
+('888-96771-3-4','Mudah Belajar DELPHI','PB05','2010-04-25',355,140000),
+('888-86771-3-5','Visual Basic','PB02','2005-07-09',455,130000),
+('979-96446-9-0','Panduan Basis Data','PB06','2012-02-12',250,115000),
+('979-96446-9-1','Menguasai SQL','PB01','2013-11-09',185,95000);
+
+-- Menampilkan data sesuai kebutuhan informasi
+SELECT
+buku_judul AS JUDUL,
+buku_jmlh_hlmn AS HALAMAN,
+buku_harga AS HARGA
+FROM buku WHERE buku_harga >70000;
+
+-- Menampilan data dari 2 tabel
+SELECT
+a.buku_judul AS JUDUL,
+a.buku_harga AS HARGA,
+b.penerbit_nama AS NAMA_PENERBIIT
+FROM buku a, penerbit b
+WHERE a.penerbit_id = b.penerbit_id;
+
+-- Menampilkan data dengan rentang tertentu
+SELECT * FROM buku
+WHERE buku_jmlh_hlmn BETWEEN 200 AND 400;
+
+-- Menampilkan data dengan logika and-or
+SELECT * FROM buku
+WHERE buku_harga > 50000 AND
+buku_jmlh_hlmn >1000;
+
+SELECT * FROM buku
+WHERE buku_harga > 50000 OR
+buku_jmlh_hlmn >1000;
+
+SELECT * FROM buku
+WHERE buku_harga > 45000
+AND penerbit_id = 'PB02';
+
+-- Menampilkan data dengan batas tertentu, dimulai dari 0
+SELECT * FROM buku LIMIT 2; -- 2 Teratas
+SELECT * FROM buku LIMIT 2,5; -- Dimulai dari data ke 2 sebanyak 2 teratas 
+
+-- Menmapilkan data tanpa duplikasi
+SELECT DISTINCT penerbit_id FROM buku;
+
+-- Mengurutkan data
+SELECT * FROM buku ORDER BY penerbit_id;
+
+SELECT * FROM buku ORDER BY buku_jmlh_hlmn DESC;
