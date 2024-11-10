@@ -7,12 +7,13 @@ USE db_rmh_skt;
 /* Menghapus database */
 DROP DATABASE db_rmh_skt;
 
+-- A table can have only ONE primary key; and in the table, this primary key can consist of single or multiple columns (fields).
 
 /* Membuat tabel dengan primary key */
 CREATE TABLE pasien (
-No_RM CHAR (5) PRIMARY KEY,
-nama_pasien VARCHAR (35),
-alamat TEXT );
+No_RM CHAR (5) PRIMARY KEY, -- Char : string contain letter, number, special char from 0 - 255. Def 1
+nama_pasien VARCHAR (35), -- VARCHAR : same as char. 0 - 65535
+alamat TEXT ); -- TEXT : Holds a string with a maximum length of 65,535 bytes
 
 CREATE TABLE pasien (
 No_RM INT (11),
@@ -37,7 +38,7 @@ CREATE TABLE buku (
 buku_isbn CHAR (13),
 buku_judul VARCHAR (75),
 penerbit_id CHAR (4),
-buku_tglterbit DATE,
+buku_tglterbit DATE, -- A date. Format: YYYY-MM-DD. The supported range is from '1000-01-01' to '9999-12-31'
 buku_jmlh_hlmn INT (11),
 buku_deskripsi TEXT,
 buku_harga DECIMAL (10.0),
@@ -109,18 +110,25 @@ VALUES
 
 /* Command untuk mengedit tabel */
 ALTER TABLE nama_tabel alter_options;
+
 ➢ ADD definisi_field_baru \\ ALTER TABLE pelanggan ADD tgllahir date NOT NULL; 
 Option ini digunakan untuk menambahkan field baru dengan “definisi_field_baru” (nama field, tipe dan option lain). 
+
 ➢ ADD INDEX nama_index 
 Option ini digunakan untuk menambahkan index dengan nama “nama_index” pada tabel. 
+
 ➢ ADD PRIMARY KEY (field_kunci) \\ ALTER TABLE pelanggan ADD PRIMARY KEY(id_pelanggan);
 Option untuk menambahkan primary key pada tabel 
+
 ➢ CHANGE field_yang_diubah definisi_field_baru 
 Option untuk mengubah field_yang_diubah menjadi definisi_field_baru 
+
 ➢ MODIFY definisi_field \\ ALTER TABLE pelanggan MODIFY tgllahir varchar(8) NOT NULL;
 Option untuk mengubah suatu field menjadi definisi_field 
+
 ➢ DROP nama_field \\ ALTER TABLE pelanggan DROP tgllahir;
 Option untuk menghapus field nama_field 
+
 ➢ RENAME TO nama_tabel_baru \\ RENAME TABLE pelanggan TO plg; \\ ALTER TABLE plg RENAME TO pelanggan;
 Option untuk mengganti nama tabel
 
@@ -133,6 +141,16 @@ UPDATE
 DELETE
 -- Memasukkan data
 INSERT
+
+-- DDL
+-- Membuat data
+CREATE
+
+-- Mengedit data
+ALTER
+
+-- Menghapus data
+DROP
 
 -- Merubah data
 UPDATE BUKU SET BUKU_DESKRIPSI = 'Ini adalah buku tentang photoshop' WHERE buku_isbn = '222-34222-1-0';
@@ -170,7 +188,7 @@ VALUES ('222-34222-1-0','Mudah Belajar Photoshop','PB01','2003-07-03',433,76000)
 ('888-96771-3-2','Pemrograman C untuk Hardware','PB05','2009-05-21',320,155000),
 ('888-96771-3-3','Menjadi Master C++','PB06','2010-09-11',400,145000),
 ('888-96771-3-4','Mudah Belajar DELPHI','PB05','2010-04-25',355,140000),
-('888-86771-3-5','Visual Basic','PB02','2005-07-09',455,130000),
+('888-86771-3-5','Visual Basic','PB02','2005-07-09',455,130000),    
 ('979-96446-9-0','Panduan Basis Data','PB06','2012-02-12',250,115000),
 ('979-96446-9-1','Menguasai SQL','PB01','2013-11-09',185,95000);
 
@@ -183,7 +201,7 @@ FROM buku WHERE buku_harga >70000;
 
 -- Menampilan data dari 2 tabel
 SELECT
-a.buku_judul AS JUDUL,
+a.buku_judul AS JUDUL,  -- a adalah variable // menampilkan data dengan alias
 a.buku_harga AS HARGA,
 b.penerbit_nama AS NAMA_PENERBIIT
 FROM buku a, penerbit b
@@ -210,10 +228,19 @@ AND penerbit_id = 'PB02';
 SELECT * FROM buku LIMIT 2; -- 2 Teratas
 SELECT * FROM buku LIMIT 2,5; -- Dimulai dari data ke 2 sebanyak 2 teratas 
 
--- Menmapilkan data tanpa duplikasi
+-- Menampilkan data tanpa duplikasi
 SELECT DISTINCT penerbit_id FROM buku;
 
 -- Mengurutkan data
 SELECT * FROM buku ORDER BY penerbit_id;
 
 SELECT * FROM buku ORDER BY buku_jmlh_hlmn DESC;
+
+-- Menampilkan banyaknya data pada suatu tabel // type data harus string
+SELECT COUNT(buku_isbn) FROM buku;
+
+-- Menampilkan rata rata pada kolom tertentu // type data harus numerik
+SELECT AVG(buku_harga) FROM buku;
+
+-- Menampilkan jumlah pada kolom tertentu
+SELECT SUM(buku_harga) FROM buku;

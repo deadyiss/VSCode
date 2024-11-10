@@ -1,0 +1,50 @@
+# Komponen Pasif
+
+-- Resistor
+Resistor adalah tahanan atau hambatan, berfungsi untuk menghambat arus listrik yang melewatinya. -- Pengertian
+Satuan harga resistor adalah Ohm. 1 MΩ (mega ohm) = 1000, KΩ (kiloohm) = 106 Ω (ohm). -- Satuan
+
+    -- Resistor Tetap
+    Resistor tetap yaitu resistor yang nilai hambatannya relatif tetap.
+
+    -- Resistor Variabel
+    Resistor variabel atau potensiometer, yaitu resistor yang besarnya hambatan dapat diubah-ubah.
+    
+    -- Menghitung Resistor
+    Yellow, Purple, Red, Gold = 47 x 100 = 4700 ohm = 4.7 K ohm + 5%
+    Brown, Black, Green, Gold = 10 x 100000 = 1000K ohm = 1 M ohm + 5%
+
+-- Kapasitor (Condensator)
+Kapasitor adalah suatu komponen listrik yang dapat menyimpan muatan listrik. -- Pengertian
+Kapasitas Kapasitor diukur dalam F(Farad) = 10`−6 µF atau mF (mikro Farad) = 10`-9 -- Satuan
+nF(nano Farad) = 10`-12 pF (piko Farad). -- Satuan
+
+    -- Elektrolit
+    Mempunyai dua kutub positif dan kutub negatif (bipolar).
+
+    -- Kering
+    Tidak membedakan kutub positif dan kutub negatif (non polar).
+
+-- Induktor
+Induktor adalah komponen listrik yang digunakan sebagai beban induktif. -- Pengertian
+Kapasitas induktor dinyatakan dalam satuan H (Henry) = 1000mH (mili Henry). -- Satuan
+Kapasitas induktor diberi lambang L, sedangkan reaktansi induktif diberi lambang XL . -- Satuan
+
+# Komponen Aktif
+
+-- Dioda semikonduktor 
+Dibentuk dengan cara menyambungkan semi-konduktor tipe p dan semikonduktor tipe n.
+Yang kemudian mengijinkan arus bergerak melalui anoda menuju ke kathoda.
+
+-- Zener Diodes
+Cara menghubungkannya pada arah kebalikan arus terhadap tegangan tertentu untuk menghasilkan tegangan referensi.
+
+-- Light Emitting Diodes (LED)
+Menghasilakn sinar jika dihubungkan dengan arus.
+
+
+
+
+
+
+
