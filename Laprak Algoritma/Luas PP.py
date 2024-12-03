@@ -1,6 +1,6 @@
-p = int(input("Masukkan Panjang :"))
-l = int(input("Masukkan Lebar :"))
+p = int(input("Masukkan Panjang : "))
+l = int(input("Masukkan Lebar : "))
 
 luas = p*l
 
-print("Luas Persegi Panjang:", luas)
+print("Luas Persegi Panjang : ", luas)

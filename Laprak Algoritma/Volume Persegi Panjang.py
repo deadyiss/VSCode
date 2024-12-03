@@ -4,4 +4,4 @@ t = int(input("Masukkan Tinggi : "))
 
 volume = p * l * t
 
-print("Volume dari persegi panjang tersebut adalah ", volume)
+print("Volume dari persegi panjang tersebut adalah", volume)

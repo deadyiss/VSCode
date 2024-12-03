@@ -39,13 +39,13 @@ total_harga = (
 if kiwi_kg + mangga_kg > 20:
     total_harga -= total_harga * 0.07
     print("")
-    print("Anda mendapatkan diskon tambahan sebesar 7% dari total penjualan untuk pembelian Kiwi dan Mangga lebih dari 20 kg")
+    print("Anda mendapatkan diskon tambahan sebesar 7% dari total penjualan untuk pembelian Kiwi dan Mangga lebih dari 20 kg!")
 if alpukat_kg > 10:
     print("")
-    print("Anda mendapatkan hadiah untuk pembelian Alpukat lebih dari 10 kg! mendapatkan hadiah payung")
+    print("Anda mendapatkan hadiah payung untuk pembelian Alpukat lebih dari 10 kg!")
 if apel_kg > 15:
     print("")
-    print("Anda mendapatkan hadiah untuk pembelian Apel lebih dari 15 kg! mendapatkan hadiah tas")
+    print("Anda mendapatkan hadiah tas untuk pembelian Apel lebih dari 15 kg!")
 
 # Output total belanja
 print("\nDetail Belanja:")
