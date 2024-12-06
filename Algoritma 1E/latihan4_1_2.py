@@ -3,7 +3,7 @@ print('***************\n')
 beli = int(input("Total pembelian = "))
 
 match beli:
-    case beli if 0 <= beli <= 1000:disc = 100
+    case beli if 0 <= beli <= 1000:disc = 100 #Jika beli berada di antara 0 dan 1000, diskon (disc) sebesar 100.
     case beli if 1001 <= beli <= 10000:disc = 500
     case beli if 10001 <= beli <= 30000:disc = 2000
     

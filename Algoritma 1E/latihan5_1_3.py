@@ -17,4 +17,4 @@ if c > 9000:
 elif c < 65000:
     print("Dollar Simpan")
 else:
-    print("?")
+    print()

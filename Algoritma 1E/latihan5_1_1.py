@@ -5,3 +5,5 @@ for i in range(26):
 rerata = jumlah / 25
 print("Jumlah : ", jumlah)
 print("Rata-rata : ", rerata)
+
+#penjumlahan deret aritmatika
